@@ -1,0 +1,19 @@
+{
+    "name": "binsuper/sapling",
+    "type": "framework",
+    "authors": [
+        {
+            "name": "Gino Huang",
+            "email": "binsuper@126.com"
+        }
+    ],
+    "license": "MIT",  
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sapling\\": "src"
+        }
+    }
+}
