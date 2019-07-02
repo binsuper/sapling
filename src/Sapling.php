@@ -9,11 +9,10 @@ use Sapling\Except\{
 use Sapling\Open\{
     IPlugin
 };
-
 use Sapling\Plugin\Context as PluginContext;
 
 /**
- * 操控中心
+ * 控制中心
  * 应用程序内应保证该实例唯一
  * @author Gino Huang <binsuper@126.com>
  */
@@ -93,7 +92,6 @@ class Sapling {
      * @throws RedeclaredError
      */
     public function loadPlugins(array $plugins_dir) {
-        $error = [];
         foreach ($plugins_dir as $dir) {
             $plugin = $this->recognizePlugin($dir);
             if (isset($this->__plugins_loaded[$plugin->getName()])) {
@@ -101,7 +99,7 @@ class Sapling {
             }
             $this->__plugins_loaded[$plugin->getName()] = $plugin;
             //执行引导程序
-            $plgctx = $this->getPluginContext($plugin);
+            $plgctx = $this->__getPluginContext($plugin);
             $plugin->bootstrap($plgctx);
             //吸收插件注册的信息
             $this->__context->assimilate($plgctx);
@@ -125,7 +123,7 @@ class Sapling {
      * @param IPlugin $plugin
      * @return Context
      */
-    public function getPluginContext(IPlugin $plugin): PluginContext {
+    private function __getPluginContext(IPlugin $plugin): PluginContext {
         if (empty($this->__plugins_context[$plugin->getName()])) {
             $this->__plugins_context[$plugin->getName()] = new PluginContext($plugin);
         }
@@ -139,6 +137,27 @@ class Sapling {
      */
     public function getContext(): Context {
         return $this->__context;
+    }
+
+    /**
+     * 触发事件
+     * 
+     * @param \Sapling\Plugin\Request $req
+     * @param callable $callback
+     */
+    public function trigger(Plugin\Request $req, $callback) {
+        $this->getContext()->trigger($req, $callback);
+    }
+
+    /**
+     * 路由分发
+     * 
+     * @param \Sapling\Plugin\Request $req
+     * @return \Sapling\Plugin\Response
+     * @throws Except\RouteError
+     */
+    public function dispatch(Plugin\Request $req): Plugin\Response {
+        return $this->getContext()->dispatch($req);
     }
 
 }
