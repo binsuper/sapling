@@ -102,7 +102,7 @@ class Sapling {
             $this->__plugins_loaded[$plugin->getName()] = $plugin;
             //执行引导程序
             $plgctx = $this->getPluginContext($plugin);
-            $plugin->getBootstrap()->run($plgctx);
+            $plugin->bootstrap($plgctx);
             //吸收插件注册的信息
             $this->__context->assimilate($plgctx);
         }

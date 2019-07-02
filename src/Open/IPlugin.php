@@ -2,6 +2,8 @@
 
 namespace Sapling\Open;
 
+use \Sapling\Plugin\Context;
+
 /**
  * 插件接口定义
  * plugin接口定义了插件与系统对接的唯一标准
@@ -28,8 +30,10 @@ interface IPlugin {
     public function getDescription(): string;
 
     /**
-     * 获取引导程序的实例对象
-     * @return IBootstrap 返回引导程序的实例对象
+     * 执行引导程序
+     * 
+     * @param Context $ctx
+     * @return $this
      */
-    public function getBootstrap(): IBootstrap;
+    public function bootstrap(Context $ctx);
 }

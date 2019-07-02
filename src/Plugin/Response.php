@@ -1,15 +1,15 @@
 <?php
 
-namespace Sapling\Event;
+namespace Sapling\Plugin;
 
 class Response {
 
     /**
-     * 事件名称
+     * 事件名称 | 路由名称
      * 
      * @var string 
      */
-    protected $_evt_name = '';
+    protected $_exec_name = '';
 
     /**
      * 响应数据
@@ -32,8 +32,15 @@ class Response {
      */
     protected $_result_errmsg = '';
 
-    public function __construct(string $evt_name) {
-        $this->_evt_name = $evt_name;
+    public function __construct(string $exec_name) {
+        $this->_exec_name = $exec_name;
+    }
+
+    /**
+     * 本次请求的名称
+     */
+    public function getExecName(): string {
+        return $this->_exec_name;
     }
 
     /**

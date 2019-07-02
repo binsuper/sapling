@@ -1,15 +1,15 @@
 <?php
 
-namespace Sapling\Event;
+namespace Sapling\Plugin;
 
 class Request {
 
     /**
-     * 事件名称
+     * 事件名称 | 路由名称
      * 
      * @var string 
      */
-    protected $_evt_name = '';
+    protected $_exec_name = '';
 
     /**
      * 请求数据
@@ -18,16 +18,16 @@ class Request {
      */
     protected $_data = [];
 
-    public function __construct(string $evt_name, array $data = []) {
-        $this->_evt_name = $evt_name;
+    public function __construct(string $exec_name, array $data = []) {
+        $this->_exec_name = $exec_name;
         $this->_data = $data;
     }
 
     /**
-     * 本次请求的事件名称
+     * 本次请求的名称
      */
-    public function getEventName(): string {
-        return $this->_evt_name;
+    public function getExecName(): string {
+        return $this->_exec_name;
     }
 
     /**

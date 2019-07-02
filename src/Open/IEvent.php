@@ -2,12 +2,18 @@
 
 namespace Sapling\Open;
 
-use \Sapling\Event\{
+use \Sapling\Plugin\{
     Request,
     Response
 };
 
 interface IEvent {
+
+    /**
+     * 实例化当前对象
+     * @return $this
+     */
+    public static function instance() : IEvent;
 
     /**
      * 获取事件名称
