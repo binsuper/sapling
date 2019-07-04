@@ -64,12 +64,14 @@ class Sapling {
      */
     public function recognizePlugin(string $plugin_dir): IPlugin {
         $joint_file = $plugin_dir . DIRECTORY_SEPARATOR . self::PLUGIN_JOINT_NAME; //插件接入文件
+        if (!file_exists($joint_file)) { //文件不存在
+            throw new RecognizableError("file<{$plugin_dir}> not found");
+        }
+        $joint_file = realpath($joint_file);
         if (!empty($this->__plugins_joint[$joint_file])) { //已识别
             return $this->__plugins_joint[$joint_file];
         }
-        if (!file_exists($joint_file)) { //文件不存在
-            throw new RecognizableError("file<{$plugin_dir}> not found");
-        } else if (!is_readable($joint_file)) { //文件不可读
+        if (!is_readable($joint_file)) { //文件不可读
             throw new RecognizableError("file<{$plugin_dir}> unreadable");
         } else if (!is_file($joint_file)) { //文件不可读
             throw new RecognizableError("file<{$plugin_dir}> is not file");
